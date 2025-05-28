@@ -1,5 +1,7 @@
 package store.product;
+
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +14,12 @@ public class ProductService {
     private ProductRepository productRepository;
     
     public Product create(Product product) {
-
         return productRepository.save(new ProductModel(product)).to();
     }
 
     public Product findById(String id) {
-        return productRepository.findById(id).get().to();
+        return productRepository.findById(id)
+            .orElseThrow(() -> new NoSuchElementException("Produto não encontrado"));
     }
 
     public List<Product> findAll() {
@@ -28,7 +30,8 @@ public class ProductService {
     }
 
     public Product deleteById(String id) {
-        ProductModel m = productRepository.findById(id).get();
+        ProductModel m = productRepository.findById(id)
+            .orElseThrow(() -> new NoSuchElementException("Produto não encontrado"));
         productRepository.delete(m);
         return m.to();
     }
