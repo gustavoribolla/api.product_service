@@ -19,7 +19,8 @@ public class ProductService {
 
     public Product findById(String id) {
         return productRepository.findById(id)
-            .orElseThrow(() -> new NoSuchElementException("Produto não encontrado"));
+            .orElseThrow(() -> new NoSuchElementException("Produto não encontrado"))
+            .to();
     }
 
     public List<Product> findAll() {
