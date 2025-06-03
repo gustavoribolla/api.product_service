@@ -28,3 +28,18 @@ spring:
 
   cache:
     type: redis
+
+management:
+  endpoints:
+    web:
+      base-path: /actuator
+      exposure:
+        include:
+          - prometheus
+          - health
+          - info
+  endpoint:
+    prometheus:
+      enabled: true
+    health:
+      show-details: always
